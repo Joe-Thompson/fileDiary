@@ -1,22 +1,38 @@
 #include <stdio.h>
+#include <string.h>
 
 #define MAX 10
 
+
 int main (void)
 {
-    int users = 0;
-    char userName [10];
+    int tasks = 0, taskPrt = 1;
+    char todoTask [100];
+    char fileOutput [100];
+
     FILE *fptr;
     fptr = fopen("./newUsers.txt", "w");
 
-//    printf("How many users:  ");
-//    scanf("%d", &users);
+    printf("How many users:  ");
+    scanf("%d", &tasks);
 
-    printf("\nPlease enter the first user name: ");
-//    scanf("%[^\n]s",userName);
-    fgets(userName, MAX, stdin);
+    for (int i = 1; i <= tasks; i++)
+    {
+        printf("\nEnter your task: ");
+        scanf("%s", todoTask);
 
-    fprintf(fptr, "user: %s", userName);
+        fprintf(fptr, "%d: %s\n", taskPrt, todoTask);
+        taskPrt++;
+    }
 
+    fclose(fptr);
+
+    FILE *fptr2 = fopen("./newUsers.txt", "r");
+
+    while (fgets(fileOutput, sizeof(fileOutput), fptr2) != NULL)
+    {
+        fileOutput[strlen(fileOutput) -1] = '\0';
+        printf("%s\n", fileOutput);
+    }
     return 0;
 }
